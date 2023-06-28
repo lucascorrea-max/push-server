@@ -9,7 +9,7 @@ export class NotificationController {
         private readonly http: Http
     ) {
         WebPush.setVapidDetails(
-            'mailto:lucasdemoraesc@gmail.com',
+            'https://push-server-woad.vercel.app',
             process.env.VAPID_PUBLICKEY || "",
             process.env.VAPID_PRIVATEKEY || ""
         );

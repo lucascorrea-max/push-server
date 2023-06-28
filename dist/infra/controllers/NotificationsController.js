@@ -18,7 +18,7 @@ const repository_1 = require("../data/repository");
 class NotificationController {
     constructor(http) {
         this.http = http;
-        web_push_1.default.setVapidDetails('mailto:lucasdemoraesc@gmail.com', process.env.VAPID_PUBLICKEY || "", process.env.VAPID_PRIVATEKEY || "");
+        web_push_1.default.setVapidDetails('https://push-server-woad.vercel.app', process.env.VAPID_PUBLICKEY || "", process.env.VAPID_PRIVATEKEY || "");
         this.useNotificationsEndpoints(http);
     }
     useNotificationsEndpoints(http) {
