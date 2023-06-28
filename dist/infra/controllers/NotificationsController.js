@@ -18,6 +18,10 @@ export class NotificationController {
             await db.write();
             return db.data;
         });
+        http.route("get", "/notification/push/subscribers", async (params, body) => {
+            console.log("/notification/push/subscribers - called");
+            return db.data.subscribers;
+        });
         http.route("post", "/notification/push/send", async (params, body) => {
             console.log("/notification/push/send - called");
             const notification = body;

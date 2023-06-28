@@ -31,6 +31,11 @@ export class NotificationController {
             return db.data;
         });
 
+        http.route("get", "/notification/push/subscribers", async (params: any, body: any) => {
+            console.log("/notification/push/subscribers - called");
+            return db.data.subscribers;
+        });
+
         http.route("post", "/notification/push/send", async (params: any, body: any) => {
             console.log("/notification/push/send - called");
             const notification = body as INotification;
