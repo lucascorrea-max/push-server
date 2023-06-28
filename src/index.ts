@@ -1,11 +1,9 @@
 import * as dotenv from "dotenv";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { NotificationController } from "./infra/controllers/NotificationsController.js";
-import { ExpressAdapter } from "./infra/http/ExpressAdapter.js";
+import { NotificationController } from "./infra/controllers/NotificationsController";
+import { ExpressAdapter } from "./infra/http/ExpressAdapter";
 
 dotenv.config({
-    path: `${dirname(fileURLToPath(import.meta.url))}\\.env`
+    path: `${__dirname}\\.env`
 });
 
 const http = new ExpressAdapter();

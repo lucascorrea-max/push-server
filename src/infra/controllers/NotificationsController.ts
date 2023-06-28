@@ -1,7 +1,7 @@
 import WebPush from "web-push";
-import { INotification } from "../../models/INotification.js";
-import { db } from "../data/repository.js";
-import { Http } from "../http/Http.js";
+import { INotification } from "../../models/INotification";
+import { db } from "../data/repository";
+import { Http } from "../http/Http";
 
 export class NotificationController {
 

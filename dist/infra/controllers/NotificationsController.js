@@ -1,32 +1,47 @@
-import WebPush from "web-push";
-import { db } from "../data/repository.js";
-export class NotificationController {
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NotificationController = void 0;
+const web_push_1 = __importDefault(require("web-push"));
+const repository_1 = require("../data/repository");
+class NotificationController {
     constructor(http) {
         this.http = http;
-        WebPush.setVapidDetails('mailto:lucasdemoraesc@gmail.com', process.env.VAPID_PUBLICKEY || "", process.env.VAPID_PRIVATEKEY || "");
+        web_push_1.default.setVapidDetails('mailto:lucasdemoraesc@gmail.com', process.env.VAPID_PUBLICKEY || "", process.env.VAPID_PRIVATEKEY || "");
         this.useNotificationsEndpoints(http);
     }
     useNotificationsEndpoints(http) {
-        http.route("get", "/notification/push/publickey", async (params, body) => {
+        http.route("get", "/notification/push/publickey", (params, body) => __awaiter(this, void 0, void 0, function* () {
             console.log("/notification/push/publickey - called");
             return { publicKey: process.env.VAPID_PUBLICKEY };
-        });
-        http.route("post", "/notification/push/subscribe", async (params, body) => {
+        }));
+        http.route("post", "/notification/push/subscribe", (params, body) => __awaiter(this, void 0, void 0, function* () {
             console.log("/notification/push/subscribe - called");
             console.log("New subscriber: " + body);
-            if (!db.data.subscribers.includes(body))
-                db.data.subscribers.push(body);
-            return db.data;
-        });
-        http.route("get", "/notification/push/subscribers", async (params, body) => {
+            if (!repository_1.db.data.subscribers.includes(body))
+                repository_1.db.data.subscribers.push(body);
+            return repository_1.db.data;
+        }));
+        http.route("get", "/notification/push/subscribers", (params, body) => __awaiter(this, void 0, void 0, function* () {
             console.log("/notification/push/subscribers - called");
-            return db.data.subscribers;
-        });
-        http.route("post", "/notification/push/send", async (params, body) => {
+            return repository_1.db.data.subscribers;
+        }));
+        http.route("post", "/notification/push/send", (params, body) => __awaiter(this, void 0, void 0, function* () {
             console.log("/notification/push/send - called");
             const notification = body;
-            db.data.subscribers.forEach(subscription => {
-                WebPush.sendNotification(subscription, JSON.stringify({
+            repository_1.db.data.subscribers.forEach(subscription => {
+                web_push_1.default.sendNotification(subscription, JSON.stringify({
                     icon: notification.icon || 'https://play-lh.googleusercontent.com/hVHBHdR3UmBijZUM_kWM72mFrJFbjzD3hZI3aaDj5n6pfm48V5jJ9kDIMS5_FT1-SQ',
                     title: notification.title,
                     body: notification.message,
@@ -34,6 +49,7 @@ export class NotificationController {
                 }));
             });
             return "Ok";
-        });
+        }));
     }
 }
+exports.NotificationController = NotificationController;
