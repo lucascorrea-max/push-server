@@ -2,4 +2,5 @@ export type HttpMethod = 'get' | 'post' | 'head' | 'put' | 'delete' | 'connect' 
 
 export interface Http {
     route(method: HttpMethod, url: string, callback: Function): void;
+    listen(port: number): void;
 }
