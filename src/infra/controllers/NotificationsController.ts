@@ -8,6 +8,11 @@ export class NotificationController {
     constructor(
         private readonly http: Http
     ) {
+        WebPush.setVapidDetails(
+            'mailto:lucasdemoraesc@gmail.com',
+            process.env.VAPID_PUBLICKEY || "",
+            process.env.VAPID_PRIVATEKEY || ""
+        );
         this.useNotificationsEndpoints(http);
     }
 

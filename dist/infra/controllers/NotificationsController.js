@@ -3,6 +3,7 @@ import db from "../data/repository.js";
 export class NotificationController {
     constructor(http) {
         this.http = http;
+        WebPush.setVapidDetails('mailto:lucasdemoraesc@gmail.com', process.env.VAPID_PUBLICKEY || "", process.env.VAPID_PRIVATEKEY || "");
         this.useNotificationsEndpoints(http);
     }
     useNotificationsEndpoints(http) {
