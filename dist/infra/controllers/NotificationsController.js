@@ -38,14 +38,12 @@ class NotificationController {
             return repository_1.db.data.subscribers;
         }));
         http.route("post", "/notification/push/send", (params, body) => __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
+            var _c, _d;
             console.log("/notification/push/send - called");
-            const notification = body;
-            const notificationPayload = {
-                icon: notification.icon || 'https://play-lh.googleusercontent.com/hVHBHdR3UmBijZUM_kWM72mFrJFbjzD3hZI3aaDj5n6pfm48V5jJ9kDIMS5_FT1-SQ',
-                title: notification.title,
-                body: notification.message,
-                imageUrl: notification.imageUrl
-            };
+            const notificationPayload = body;
+            (_a = (_c = notificationPayload.notification).icon) !== null && _a !== void 0 ? _a : (_c.icon = "default");
+            (_b = (_d = notificationPayload.notification).image) !== null && _b !== void 0 ? _b : (_d.image = "https://maximatech.com.br/wp-content/uploads/2019/04/maximatech-icone-01.jpg");
             let result = undefined;
             yield Promise.all(repository_1.db.data.subscribers.map(sub => web_push_1.default.sendNotification(sub, JSON.stringify(notificationPayload))))
                 .then(() => result = { message: 'Notifications sended.' })

@@ -38,13 +38,9 @@ export class NotificationController {
 
         http.route("post", "/notification/push/send", async (params: any, body: any) => {
             console.log("/notification/push/send - called");
-            const notification = body as INotification;
-            const notificationPayload = {
-                icon: notification.icon || 'https://play-lh.googleusercontent.com/hVHBHdR3UmBijZUM_kWM72mFrJFbjzD3hZI3aaDj5n6pfm48V5jJ9kDIMS5_FT1-SQ',
-                title: notification.title,
-                body: notification.message,
-                imageUrl: notification.imageUrl
-            };
+            const notificationPayload = body as INotification;
+            notificationPayload.notification.icon ??= "default";
+            notificationPayload.notification.image ??= "https://maximatech.com.br/wp-content/uploads/2019/04/maximatech-icone-01.jpg";
 
             let result = undefined;
             await Promise.all(db.data.subscribers.map(sub => WebPush.sendNotification(
