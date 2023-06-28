@@ -26,7 +26,8 @@ export class NotificationController {
         http.route("post", "/notification/push/subscribe", async (params: any, body: any) => {
             console.log("/notification/push/subscribe - called");
             console.log("New subscriber: " + body);
-            db.data.subscribers.push(body);
+            if (!db.data.subscribers.includes(body))
+                db.data.subscribers.push(body);
             await db.write();
             return db.data;
         });
