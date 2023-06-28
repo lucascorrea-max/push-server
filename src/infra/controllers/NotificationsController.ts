@@ -1,6 +1,6 @@
 import WebPush from "web-push";
 import { INotification } from "../../models/INotification.js";
-import db from "../data/repository.js";
+import { db } from "../data/repository.js";
 import { Http } from "../http/Http.js";
 
 export class NotificationController {
@@ -28,7 +28,6 @@ export class NotificationController {
             console.log("New subscriber: " + body);
             if (!db.data.subscribers.includes(body))
                 db.data.subscribers.push(body);
-            await db.write();
             return db.data;
         });
 

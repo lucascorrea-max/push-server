@@ -1,5 +1,5 @@
 import WebPush from "web-push";
-import db from "../data/repository.js";
+import { db } from "../data/repository.js";
 export class NotificationController {
     constructor(http) {
         this.http = http;
@@ -16,7 +16,6 @@ export class NotificationController {
             console.log("New subscriber: " + body);
             if (!db.data.subscribers.includes(body))
                 db.data.subscribers.push(body);
-            await db.write();
             return db.data;
         });
         http.route("get", "/notification/push/subscribers", async (params, body) => {
