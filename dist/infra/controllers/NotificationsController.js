@@ -40,15 +40,19 @@ class NotificationController {
         http.route("post", "/notification/push/send", (params, body) => __awaiter(this, void 0, void 0, function* () {
             console.log("/notification/push/send - called");
             const notification = body;
-            repository_1.db.data.subscribers.forEach(subscription => {
-                web_push_1.default.sendNotification(subscription, JSON.stringify({
-                    icon: notification.icon || 'https://play-lh.googleusercontent.com/hVHBHdR3UmBijZUM_kWM72mFrJFbjzD3hZI3aaDj5n6pfm48V5jJ9kDIMS5_FT1-SQ',
-                    title: notification.title,
-                    body: notification.message,
-                    imageUrl: notification.imageUrl
-                }));
+            const notificationPayload = {
+                icon: notification.icon || 'https://play-lh.googleusercontent.com/hVHBHdR3UmBijZUM_kWM72mFrJFbjzD3hZI3aaDj5n6pfm48V5jJ9kDIMS5_FT1-SQ',
+                title: notification.title,
+                body: notification.message,
+                imageUrl: notification.imageUrl
+            };
+            let result = undefined;
+            yield Promise.all(repository_1.db.data.subscribers.map(sub => web_push_1.default.sendNotification(sub, JSON.stringify(notificationPayload))))
+                .then(() => result = { message: 'Notifications sended.' })
+                .catch(err => {
+                result = "Error sending notification, reason: ", err;
             });
-            return "Ok";
+            return result;
         }));
     }
 }
